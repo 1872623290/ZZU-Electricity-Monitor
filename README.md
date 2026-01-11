@@ -38,7 +38,16 @@
 
 支持主校区、北校区、东校区、南校区、护理学院、洛阳校区。
 
-### 第三步：启用 Actions
+### 第三步：配置 GitHub Pages
+
+进入你 Fork 的仓库，点击 **Settings** → **Pages**：
+
+1. 在 **Source** 部分，将构建和部署源从 **"Deploy from a branch"** 改为 **"GitHub Actions"**
+2. 保存设置
+
+这样配置后，GitHub Actions 会自动将生成的页面部署到 GitHub Pages，你就可以通过 `https://你的用户名.github.io/ZZU-Electricity-Monitor/` 访问电量监控页面了。
+
+### 第四步：启用 Actions
 
 进入 **Actions** 页面，点击 **I understand my workflows, go ahead and enable them** 启用工作流。
 
@@ -60,7 +69,7 @@
 
 你也可以点击 **Run workflow** 手动触发运行。
 
-### 第四步：配置通知渠道（可选）
+### 第五步：配置通知渠道（可选）
 
 至少配置一个通知渠道以接收电量提醒。推荐使用 Telegram，无发送次数限制。
 
@@ -314,6 +323,22 @@ ZZU-Electricity-Monitor/
 1. 检查 Secrets 配置是否正确
 2. 检查 Actions 是否启用
 3. 查看 Actions 运行日志排查错误
+
+### 为什么 Actions 运行失败？
+
+常见原因及解决方法：
+
+1. **账号密码错误**：检查 `ACCOUNT` 和 `PASSWORD` 配置
+2. **房间号错误**：使用房间查询器重新获取正确的房间编号
+3. **网络问题**：GitHub Actions 偶尔会有网络波动，可以手动重新运行
+4. **page 分支不存在**：首次运行会自动创建，无需担心
+
+### 如何查看电量历史数据？
+
+访问你的 GitHub Pages 页面（`https://你的用户名.github.io/ZZU-Electricity-Monitor/`），页面会显示：
+- 实时电量数据
+- 7天电量变化趋势图
+- 历史记录表格
 
 ### 如何修改运行频率？
 

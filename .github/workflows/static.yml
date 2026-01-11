@@ -39,12 +39,23 @@ jobs:
 
       - name: Clone page branch
         run: |
-          # 克隆仓库（仅克隆最新版本）
-          git clone --depth=1 --branch=page https://github.com/${{ github.repository }}.git /tmp/repo
-          # 复制 data 文件夹内容到目标目录
-          cp -r /tmp/repo/data/* ./page/data/
-          # 清理临时文件
-          rm -rf /tmp/repo
+          # 检查 page 分支是否存在
+          if git ls-remote --heads https://github.com/${{ github.repository }}.git page | grep -q page; then
+            echo "📥 发现 page 分支，正在克隆..."
+            # 克隆仓库（仅克隆最新版本）
+            git clone --depth=1 --branch=page https://github.com/${{ github.repository }}.git /tmp/repo
+            # 复制 data 文件夹内容到目标目录
+            if [ -d "/tmp/repo/data" ]; then
+              cp -r /tmp/repo/data/* ./page/data/
+              echo "✅ 已复制 page 分支的 data 文件夹内容"
+            else
+              echo "⚠️ page 分支中未找到 data 文件夹"
+            fi
+            # 清理临时文件
+            rm -rf /tmp/repo
+          else
+            echo "ℹ️ page 分支不存在，跳过克隆步骤"
+          fi
 
       - name: Decrypt tokens.enc if exists
         env:
